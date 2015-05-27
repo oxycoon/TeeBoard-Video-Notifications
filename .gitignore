@@ -1,0 +1,10 @@
+#JQuery
+/js/jquery.*
+
+# Images
+/images/notification-bg-donate.png
+/images/notification-bg-follow.png
+/images/notification-bg-sub.png
+
+# Folders
+*.mp4

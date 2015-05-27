@@ -1,0 +1,44 @@
+html, body {
+	height: 100%;
+	/*background-color: #FFFFFF;*/
+	background-color: rgba(255,255,255,0)!important;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+
+#flashContent {
+	width: 200px;
+	height: 100px;
+}
+
+.notification-msg {
+	color: #FFFFFF;
+	font-size: 32px;
+	font-family: Tahoma, Geneva, sans-serif;
+	font-weight: bold;
+	text-transform: uppercase;
+	position: absolute;
+	top: 158px;
+	left: 400px;
+	z-index: 10;
+}
+
+#notification {
+	visibility: hidden;
+}
+
+#buffer {
+	display: none;
+}
+
+#output {
+	position: absolute;
+	top: 53;
+	left: 20;
+	display: block;
+	z-index: 5;
+}

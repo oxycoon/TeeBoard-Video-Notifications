@@ -1,0 +1,79 @@
+﻿<html>
+<head>
+<title>TeeBoard Notifications Widget</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<!-- visit http://www.greensock.com/get-started-js/ for more info -->
+
+<!--CDN links for the latest TweenLite, CSSPlugin, and EasePack -->
+<script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/plugins/CSSPlugin.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/easing/EasePack.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenLite.min.js"></script>
+
+
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery.fittext.js"></script>
+<script src="js/jquery.lettering.js"></script>
+<script src="js/jquery.textillate.js"></script>
+
+<script src="js/notification.js"  type="text/javascript"></script>
+
+<!--<link href="css/style.css" rel="stylesheet">-->
+
+<link href="css/style.css" rel="stylesheet">
+<link href="css/animate.css" rel="stylesheet">
+
+</head>
+<body>
+
+<!--
+Animations should take no longer than 10 seconds (showing + hiding), as notifications are queued, 
+meaning that if there are 2 new followers, 2 alerts are invoked, 10 seconds apart.
+-->
+<div id="notification">
+	<div class="notification-msg" id="notification-text">
+		TEEBOARD JAVASCRIPT NOTIFICATIONS!!
+	</div>
+	<img id="notification-img" src="images/VideoBackground.png" width="2020" height="346">
+	<video id="video" style="display:none">
+		<source src="videos/Comp 1_1.mp4" type="video/mp4">
+	</video>
+	<canvas id="buffer" width="1920" height="492"></canvas>
+	<canvas id="output" width="1920" height="246"></canvas>
+	
+</div>
+
+<div id="flashContent">
+  <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="200" height="100" id="teeboard-notifications" align="middle">
+    <param name="movie" value="teeboard-notifications.swf" />
+    <param name="quality" value="high" />
+    <param name="bgcolor" value="#ffffff" />
+    <param name="play" value="true" />
+    <param name="loop" value="false" />
+    <param name="wmode" value="transparent" />
+    <param name="scale" value="noscale" />
+    <param name="menu" value="false" />
+    <param name="devicefont" value="false" />
+    <param name="salign" value="lt" />
+    <param name="allowScriptAccess" value="always" />
+    <!--[if !IE]>-->
+    <object type="application/x-shockwave-flash" data="teeboard-notifications.swf" width="200" height="100">
+      <param name="movie" value="teeboard-notifications.swf" />
+      <param name="quality" value="high" />
+      <param name="bgcolor" value="#ffffff" />
+      <param name="play" value="true" />
+      <param name="loop" value="false" />
+      <param name="wmode" value="transparent" />
+      <param name="scale" value="noscale" />
+      <param name="menu" value="false" />
+      <param name="devicefont" value="false" />
+      <param name="salign" value="lt" />
+      <param name="allowScriptAccess" value="always" />
+    </object>
+    <!--<![endif]-->
+  </object>
+</div>
+
+
+</body>
+</html>
