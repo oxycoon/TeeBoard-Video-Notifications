@@ -10,11 +10,11 @@ After making the animation video, make sure there is no background behind it. Fo
 </br>
 Once we have the two videos re-import them into one video with double height of the original video. Stack the two videos on top of each other with the RGB video on the top, then export this version of the video as a web friendly format. 
 
-/-------------------------------/</br>
-/				RGB				/</br>
-/-------------------------------/</br>
-/				Alpha			/</br>
-/-------------------------------/</br>
+/-------/</br>
+/ -RGB- /</br>
+/-------/</br>
+/ Alpha /</br>
+/-------/</br>
 
 Put the final video into the video folder (not included in this project). If desired, create an appropriate image background to use as a "canvas" to hide the awkward box that appears when the video is run. 
 
