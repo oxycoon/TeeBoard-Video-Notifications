@@ -11,7 +11,7 @@ var videoDonate = "videos/FollowerAlert_High.mp4";
 var videoChanged = false;
 
 /**
- *	Delay before the text starts animating
+ *	Delay before the text starts animating in milliseconds
  *	@const 
  */
 var TEXTILLATION_INITIAL_DELAY_FOLLOW = 2200;
@@ -20,7 +20,7 @@ var TEXTILLATION_INITIAL_DELAY_DONATE = 2200;
 
 /**
  *	The timing when the textillation is to start
- *	the fading animation.
+ *	the fading animation in milliseconds.
  *	@const 
  */
 var TEXTILLATION_HALFWAY_DELAY_FOLLOW = 3115;
@@ -28,7 +28,7 @@ var TEXTILLATION_HALFWAY_DELAY_SUB = 3115;
 var TEXTILLATION_HALFWAY_DELAY_DONATE = 3115;
 
 /**
- *	Length of the video used in the animation.
+ *	Length of the video used in the animation in milliseconds.
  *	@const 
  */
 var TEXTILLATION_VIDEO_LENGTH_FOLLOW = 7000;
