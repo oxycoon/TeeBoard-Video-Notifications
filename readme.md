@@ -40,7 +40,10 @@ Once we have the two videos re-import them into one video with double
 Put the final video into the video folder (not included in this project).
  If desired, create an appropriate image background to use as a "canvas"
  to hide the awkward box that appears when the video is run. 
-
+</br>
+IMPORTANT NOTICE: If you're using different videos for various notifications
+ it is important that these videos have the same fps setup. 
+ 
 <h2>Dependencies</h2>
 <b>JQuery</b> - Used in libraries I use</br>
 <b>Textillate</b> - Allows for the text animation in the notification</br>
@@ -50,3 +53,7 @@ Put the final video into the video folder (not included in this project).
 <h2>TODO</h2>
 <li>Create a dynamic video selector for different notification types (follower, subscriber, donation).</li>
 <li>Smooth out the code to be less clunky</li>
+
+<h2>KNOWN BUGS</h2>
+<li>CLR browser in OBS may be picky on bitrate for the videos. Test video is 1920x492 with bitrate 1971 kbps.
+ Unsure what causes this, as testing in regular browser works without problems. Needs more testing.</li>

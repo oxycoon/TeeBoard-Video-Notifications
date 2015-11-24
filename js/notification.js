@@ -14,20 +14,26 @@ var videoChanged = false;
  *	Delay before the text starts animating
  *	@const 
  */
-var TEXTILLATION_INITIAL_DELAY = 2200;
+var TEXTILLATION_INITIAL_DELAY_FOLLOW = 2200;
+var TEXTILLATION_INITIAL_DELAY_SUB = 2200;
+var TEXTILLATION_INITIAL_DELAY_DONATE = 2200;
 
 /**
  *	The timing when the textillation is to start
  *	the fading animation.
  *	@const 
  */
-var TEXTILLATION_HALFWAY_DELAY = 3115;
+var TEXTILLATION_HALFWAY_DELAY_FOLLOW = 3115;
+var TEXTILLATION_HALFWAY_DELAY_SUB = 3115;
+var TEXTILLATION_HALFWAY_DELAY_DONATE = 3115;
 
 /**
  *	Length of the video used in the animation.
  *	@const 
  */
-var TEXTILLATION_VIDEO_LENGTH = 7000;
+var TEXTILLATION_VIDEO_LENGTH_FOLLOW = 7000;
+var TEXTILLATION_VIDEO_LENGTH_SUB = 7000;
+var TEXTILLATION_VIDEO_LENGTH_DONATE = 7000;
 
 /**
  *	Output canvas to draw the video on.
@@ -95,11 +101,12 @@ function prepareVideo() {
 	width = outputCanvas.width;
 	height = outputCanvas.height;
 	
+	//Play listener, processes the frames for the selected update frequency
 	video.addEventListener('play', function(){
 		clearInterval(interval);
 		interval = setInterval(processFrame, updateFrequency);
 	});
-	
+	//End listener, hides the animation when it's over.
 	video.addEventListener('ended', function(){
 		video.load();
 		hideNotification();
@@ -109,10 +116,13 @@ function prepareVideo() {
 /**
  *	Selects the video for the animation.
  *	@param {string} type The type of notification to display. 
- *	@return {int} status Tells whether or not the selection is successful
+ *	@return {int} status Tells whether or not the selection is successful.
+ *		0 means failure, 1 means success.
  */
 function selectVideo(type){
+	//Checks if the notification is a donation
 	if(type == "donation"){
+		//Checks if there is a video connected to the notification type
 		if(videoDonate != ""){
 			video.src = videoDonate;
 		}
@@ -120,7 +130,9 @@ function selectVideo(type){
 			return 0;
 		}
 	}
+	//Checks if the notification is a follower
 	else if(type == "follower"){
+		//Checks if there is a video connected to the notification type
 		if(videoFollow != ""){
 			video.src = videoFollow;
 		}
@@ -128,7 +140,9 @@ function selectVideo(type){
 			return 0;
 		}
 	}
+	//Checks if the notification is a subscriber
 	else if(type == "subscriber"){
+		//Checks if there is a video connected to the notification type
 		if(videoSub != ""){
 			video.src == videoSub;
 		}
@@ -146,13 +160,12 @@ function selectVideo(type){
  *	@param {number} length The number of characters in the message. 
  */
  function prepareText(type, length){
- 
+	//Follower settings
 	if(type == "follower"){
-		var outDelay = TEXTILLATION_VIDEO_LENGTH - TEXTILLATION_INITIAL_DELAY 
-						- TEXTILLATION_HALFWAY_DELAY - length * 35;
-	 
+		var outDelay = TEXTILLATION_VIDEO_LENGTH_FOLLOW - TEXTILLATION_INITIAL_DELAY_FOLLOW 
+						- TEXTILLATION_HALFWAY_DELAY_FOLLOW - length * 35;
 		$('.notification-msg').textillate({
-			initialDelay: TEXTILLATION_INITIAL_DELAY, 
+			initialDelay: TEXTILLATION_INITIAL_DELAY_FOLLOW, 
 			autoStart: false,
 			in:	{
 				effect: 'fadeInLeft',
@@ -176,8 +189,71 @@ function selectVideo(type){
 				reverse: true
 			},
 			type: 'char',
-			
-			//callback: hideNotification
+			//callback: hideNotification //Hides the animation when the text is done animating. 
+		});
+	}
+	//Donation settings
+	else if(type == "donation"){
+		var outDelay = TEXTILLATION_VIDEO_LENGTH_DONATE - TEXTILLATION_INITIAL_DELAY_DONATE 
+						- TEXTILLATION_HALFWAY_DELAY_DONATE - length * 35;
+		$('.notification-msg').textillate({
+			initialDelay: TEXTILLATION_INITIAL_DELAY_DONATE, 
+			autoStart: false,
+			in:	{
+				effect: 'fadeInLeft',
+				delayScale: 1.5,
+				delay: 10,
+				sync: false,
+				shuffle: false,
+				reverse: false,
+				callback: function() {
+					setTimeout(function() {
+						$('.notification-msg').textillate('out');
+					}, outDelay);
+				}
+			},
+			out: {
+				effect: 'fadeOutLeft',
+				delayScale: 1.5,
+				delay: 10,
+				sync: false,
+				shuffle: false,
+				reverse: true
+			},
+			type: 'char',
+			//callback: hideNotification //Hides the animation when the text is done animating. 
+		});
+	}
+	//Subscriber settings
+	if(type == "subscriber"){
+		var outDelay = TEXTILLATION_VIDEO_LENGTH_SUB - TEXTILLATION_INITIAL_DELAY_SUB 
+						- TEXTILLATION_HALFWAY_DELAY_SUB - length * 35;
+		$('.notification-msg').textillate({
+			initialDelay: TEXTILLATION_INITIAL_DELAY_SUB, 
+			autoStart: false,
+			in:	{
+				effect: 'fadeInLeft',
+				delayScale: 1.5,
+				delay: 10,
+				sync: false,
+				shuffle: false,
+				reverse: false,
+				callback: function() {
+					setTimeout(function() {
+						$('.notification-msg').textillate('out');
+					}, outDelay);
+				}
+			},
+			out: {
+				effect: 'fadeOutLeft',
+				delayScale: 1.5,
+				delay: 10,
+				sync: false,
+				shuffle: false,
+				reverse: true
+			},
+			type: 'char',
+			//callback: hideNotification //Hides the animation when the text is done animating. 
 		});
 	}
 }
@@ -192,6 +268,7 @@ function processFrame() {
 	frameData = frame.data;
 	alphaData = bufferContext.getImageData(0, height, width, height).data;
 	
+	//Processes the pixels. 
 	for(var i = 3, length = frameData.length; i < length; i +=4) {
 		var r = alphaData[i-3];
 		var g = alphaData[i-2];
@@ -222,7 +299,7 @@ function teeboardNotification(type, msg) {
 		video.play();
 	}
 
-	prepareText(msg.length);
+	prepareText(type, msg.length);
 	$('.notification-msg').find('.texts li:first').text(msg);
 	$('.notification-msg').textillate('start');
 	
