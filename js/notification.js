@@ -4,9 +4,9 @@ var imgSub = "images/notification-bg-sub.png";
 var imgDonate = "images/notification-bg-donate.png";
 
 //Relative paths to notification videos
-var videoFollow = "videos/FollowerAlert.mp4";
+var videoFollow = "videos/FollowerAlert_High.mp4";
 var videoSub = "";
-var videoDonate = "";
+var videoDonate = "videos/FollowerAlert_High.mp4";
 
 var videoChanged = false;
 
@@ -49,6 +49,9 @@ var	bufferCanvas;
  */
 var	bufferContext;
 
+/**
+ *	Active video
+ */
 var	video;
 
 /**
@@ -104,41 +107,79 @@ function prepareVideo() {
 }
 
 /**
+ *	Selects the video for the animation.
+ *	@param {string} type The type of notification to display. 
+ *	@return {int} status Tells whether or not the selection is successful
+ */
+function selectVideo(type){
+	if(type == "donation"){
+		if(videoDonate != ""){
+			video.src = videoDonate;
+		}
+		else{
+			return 0;
+		}
+	}
+	else if(type == "follower"){
+		if(videoFollow != ""){
+			video.src = videoFollow;
+		}
+		else{
+			return 0;
+		}
+	}
+	else if(type == "subscriber"){
+		if(videoSub != ""){
+			video.src == videoSub;
+		}
+		else{
+			return 0;
+		}
+	}
+	return 1;
+}
+
+
+/**
  *	Sets the settings for the text animation. 
+ *	@param {string} type The type of notification to display. 
  *	@param {number} length The number of characters in the message. 
  */
- function prepareText(length){
-	var outDelay = TEXTILLATION_VIDEO_LENGTH - TEXTILLATION_INITIAL_DELAY 
-					- TEXTILLATION_HALFWAY_DELAY - length * 35;
+ function prepareText(type, length){
  
-	$('.notification-msg').textillate({
-		initialDelay: TEXTILLATION_INITIAL_DELAY, 
-		autoStart: false,
-		in:	{
-			effect: 'fadeInLeft',
-			delayScale: 1.5,
-			delay: 10,
-			sync: false,
-			shuffle: false,
-			reverse: false,
-			callback: function() {
-				setTimeout(function() {
-					$('.notification-msg').textillate('out');
-				}, outDelay);
-			}
-		},
-		out: {
-			effect: 'fadeOutLeft',
-			delayScale: 1.5,
-			delay: 10,
-			sync: false,
-			shuffle: false,
-			reverse: true
-		},
-		type: 'char',
-		
-		//callback: hideNotification
-	});
+	if(type == "follower"){
+		var outDelay = TEXTILLATION_VIDEO_LENGTH - TEXTILLATION_INITIAL_DELAY 
+						- TEXTILLATION_HALFWAY_DELAY - length * 35;
+	 
+		$('.notification-msg').textillate({
+			initialDelay: TEXTILLATION_INITIAL_DELAY, 
+			autoStart: false,
+			in:	{
+				effect: 'fadeInLeft',
+				delayScale: 1.5,
+				delay: 10,
+				sync: false,
+				shuffle: false,
+				reverse: false,
+				callback: function() {
+					setTimeout(function() {
+						$('.notification-msg').textillate('out');
+					}, outDelay);
+				}
+			},
+			out: {
+				effect: 'fadeOutLeft',
+				delayScale: 1.5,
+				delay: 10,
+				sync: false,
+				shuffle: false,
+				reverse: true
+			},
+			type: 'char',
+			
+			//callback: hideNotification
+		});
+	}
 }
 
 /**
@@ -156,10 +197,14 @@ function processFrame() {
 		var g = alphaData[i-2];
 		var b = alphaData[i-1];
 	
-		if(r == 16 && g == 16 && b == 16)
+		//The "blackest" colour in the video is 16,16,16, which is the alpha for our system
+		//turn the colour to 0,0,0 to turn the alpha completely black. 
+		if(r == 16 && g == 16 && b == 16){
 			frameData[i] = 0;
-		else
+		}
+		else{
 			frameData[i] = alphaData[i-1];
+		}
 	}
 	outputContext.putImageData(frame, 0, 0, 0, 0, width, height);
 }
@@ -172,7 +217,10 @@ function processFrame() {
  */
 function teeboardNotification(type, msg) {
 	outputCanvas.display = 'block';
-	video.play();
+	
+	if(selectVideo(type) > 0){
+		video.play();
+	}
 
 	prepareText(msg.length);
 	$('.notification-msg').find('.texts li:first').text(msg);

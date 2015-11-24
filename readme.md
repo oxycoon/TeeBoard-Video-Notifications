@@ -8,8 +8,8 @@ Don't expect the best code standard for this project, as I'm not too well versed
  in the best practice usage of javascript and html5. Before this I've only done 
  one javascript/html5 project, which I wasn't too happy with. 
 
-<h2>How this works</h2>
 This plugin uses a video rendered with both RGB and alpha channels into
+<h2>How this works</h2>
  the same video, putting the RGB on top and alpha channels on the bottom.
  Using these the plugin puts together the appropriate values to create a
  transparent video to use in the stream. Because of the nature of colours
