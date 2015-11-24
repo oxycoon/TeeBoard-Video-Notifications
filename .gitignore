@@ -1,6 +1,3 @@
-#JQuery
-/js/jquery.*
-
 # Images
 /images/notification-bg-donate.png
 /images/notification-bg-follow.png
